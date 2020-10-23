@@ -9,6 +9,7 @@ import ShoppingCart from './components/ShoppingCart';
 
 // Contexts
 import ProductContext from "./contexts/ProductContext";
+import CartContext from "./contexts/CartContext";
 
 function App() {
 	const [products] = useState(data);
@@ -22,16 +23,17 @@ function App() {
 	return (
 		<div className="App">
 			<ProductContext.Provider value={{ products, addItem }}> {/* Why the double curly braces? */}
-				<Navigation cart={cart} />
+				<CartContext.Provider value={{ cart }}>
 
-				{/* Routes */}
-				<Route exact path="/">
-					<Products />
-				</Route>
+					<Navigation cart={cart} />
+					<Route exact path="/">
+						<Products />
+					</Route>
+					<Route path="/cart">
+						<ShoppingCart />
+					</Route>
 
-				<Route path="/cart">
-					<ShoppingCart />
-				</Route>
+				</CartContext.Provider>
 			</ProductContext.Provider>
 		</div>
 	);
